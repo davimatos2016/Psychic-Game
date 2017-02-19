@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Pshyic Game</title>
+    <!-- Link to CSS file -->
+    <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+   <!-- Game statistics to be displayed -->
+   <section class="content conatiner-fluid">
+    <h1>The Pshyic Game</h1>
+    <p>Guess what letter I'm thinking of</p>
+    <p>Wins: <span id="wins"></span> </p>
+    <p>Losses: <span id="loses"></span></p>
+    <p>Guesses Left: <span id="guesses"></span></p>
+    <p>You Guesses so far: <span id="userguessed"></span></p>
+</section>
+</div>
+<div class="col-sm-3"></div>
+<script>
+
+// Variables 
+var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "X", "Z"];
+var wins = 0;
+var losses = 0;
+var chances = 8;
+var user_guessed = [];
+var computerGuess = "";
+var userGuess = "";
+
+// Generates a randon letter
+computerGuess = letters[Math.floor(Math.random() * letters.length)];
+
+// User inputs his/her guess
+document.onkeyup = function(event) {
+    userGuess = String.fromCharCode(event.keyCode).toUpperCase();
+
+// Verify if user guessed letter and prints on "Wins", if letter was guessed
+if (userGuess == computerGuess) {
+    wins++;
+    document.getElementById("wins").innerHTML = wins;
+    alert("You Guessed it Right!");
+
+    user_guessed = [];
+    computerGuess = letters[Math.floor(Math.random() * letters.length)];
+
+// If user does not guess letter, we will decrease chances. It will verify if is there any guess left and generate a new randon letter if there is no more chances left.
+} else {
+    chances--;   
+    if (chances === -1) {
+        alert("No more Guessed Left!");
+        losses++;                   
+        chances = 8;
+        computerGuess = letters[Math.floor(Math.random() * letters.length)];
+        user_guessed = [];
+    }
+
+    // Prints the result 
+    user_guessed.push(" " + userGuess);
+    document.getElementById("userguessed").innerHTML = user_guessed;
+}
+document.getElementById("loses").innerHTML = losses;
+document.getElementById("guesses").innerHTML = chances;
+
+}
+
+</script>
+</body>
+</html>
